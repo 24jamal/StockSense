@@ -1,1 +1,9 @@
-
+numpy
+pandas
+sklearn
+tensorflow
+tensorflow
+pymongo
+streamlit
+matplotlib
+subprocess
