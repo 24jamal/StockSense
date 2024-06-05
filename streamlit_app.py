@@ -253,7 +253,7 @@ num_days = 60
 last_60_days = scaled_data[-seq_length:]
 forecast = []
 for _ in range(num_days):
-    prediction = model.predict(last_60_days.reshape(1, seq_length, 1),verbose=0)
+    prediction = model.predict(last_60_days.reshape(1, seq_length, 1))
     forecast.append(prediction[0, 0])
     last_60_days = np.append(last_60_days[1:], prediction[0].reshape(1, 1), axis=0)
 
