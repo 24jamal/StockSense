@@ -160,7 +160,8 @@ model.add(Dense(units=1))
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 # Train the model
-model.fit(X_train, y_train, epochs=2, batch_size=32)
+model.fit(X_train, y_train, epochs=2, batch_size=32, verbose=0)
+
 
 # Make predictions
 predictions = model.predict(X_test)
