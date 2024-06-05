@@ -190,7 +190,6 @@ st.pyplot(fig)
 
 
 ##########################################
-
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -235,6 +234,11 @@ training_data_len = int(len(X) * 0.8)  # 80% of data for training, 20% for testi
 X_train, X_test = X[:training_data_len], X[training_data_len:]
 y_train, y_test = y[:training_data_len], y[training_data_len:]
 
+# Check for NaN values
+if np.isnan(X_train).any() or np.isnan(y_train).any():
+    st.error("NaN values detected in training data. Please handle them before training the model.")
+    st.stop()
+
 # Build LSTM model
 model = Sequential()
 model.add(LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1], 1)))
@@ -245,15 +249,15 @@ model.add(Dense(units=1))
 # Compile the model
 model.compile(optimizer='adam', loss='mean_squared_error')
 
-# Train the model
-model.fit(X_train, y_train, epochs=2, batch_size=32, verbose=0)
+# Train the model with increased verbosity
+model.fit(X_train, y_train, epochs=2, batch_size=32, verbose=1)
 
 # Make predictions for the next 2 months (60 days)
 num_days = 60
 last_60_days = scaled_data[-seq_length:]
 forecast = []
 for _ in range(num_days):
-    prediction = model.predict(last_60_days.reshape(1, seq_length, 1),verbose=0)
+    prediction = model.predict(last_60_days.reshape(1, seq_length, 1), verbose=0)
     forecast.append(prediction[0, 0])
     last_60_days = np.append(last_60_days[1:], prediction[0].reshape(1, 1), axis=0)
 
@@ -262,7 +266,7 @@ forecast = scaler.inverse_transform(np.array(forecast).reshape(-1, 1))
 
 # Generate dates for the next 2 months
 last_date = mongo_df['Date'].iloc[-1]
-forecast_dates = [(last_date + timedelta(days=i+1)).date() for i in range(num_days)]
+forecast_dates = [(last_date + timedelta(days=i + 1)).date() for i in range(num_days)]
 
 # Display forecasted stock prices for the next 2 months
 st.subheader('Forecasted Stock Prices for the Next 2 Months:')
