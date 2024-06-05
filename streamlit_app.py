@@ -246,14 +246,14 @@ model.add(Dense(units=1))
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 # Train the model
-model.fit(X_train, y_train, epochs=2, batch_size=32, verbose=0)
+model.fit(X_train, y_train, epochs=2, batch_size=32, verbose=1)
 
 # Make predictions for the next 2 months (60 days)
 num_days = 60
 last_60_days = scaled_data[-seq_length:]
 forecast = []
 for _ in range(num_days):
-    prediction = model.predict(last_60_days.reshape(1, seq_length, 1),verbose=0)
+    prediction = model.predict(last_60_days.reshape(1, seq_length, 1),verbose=1)
     forecast.append(prediction[0, 0])
     last_60_days = np.append(last_60_days[1:], prediction[0].reshape(1, 1), axis=0)
 
