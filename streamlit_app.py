@@ -164,7 +164,7 @@ model.fit(X_train, y_train, epochs=2, batch_size=32, verbose=0)
 
 
 # Make predictions
-predictions = model.predict(X_test)
+predictions = model.predict(X_test, verbose=0)
 
 # Inverse scaling to get actual prices
 predictions = scaler.inverse_transform(predictions)
