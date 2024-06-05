@@ -280,16 +280,6 @@ plt.xticks(rotation=45)  # Rotate x-axis labels for better readability
 plt.legend()
 st.pyplot()
 
-BrokenPipeError: This app has encountered an error. The original error message is redacted to prevent data leaks. Full error details have been recorded in the logs (if you're on Streamlit Cloud, click on 'Manage app' in the lower right of your app).
-Traceback:
-File "/home/adminuser/venv/lib/python3.11/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 600, in _run_script
-    exec(code, module.__dict__)
-File "/mount/src/stocksense/streamlit_app.py", line 249, in <module>
-    model.fit(X_train, y_train, epochs=2, batch_size=32)
-File "/home/adminuser/venv/lib/python3.11/site-packages/keras/src/utils/traceback_utils.py", line 122, in error_handler
-    raise e.with_traceback(filtered_tb) from None
-File "/home/adminuser/venv/lib/python3.11/site-packages/keras/src/utils/io_utils.py", line 99, in print_msg
-    sys.stdout.flush()
 ###################################################################
 
 
