@@ -1,6 +1,6 @@
 import streamlit as st
 import Reliance
-import app1
+import App1
 
 
 # Define UI elements
