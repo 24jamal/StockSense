@@ -1,6 +1,6 @@
 import streamlit as st
 import Reliance
-import app
+import app1
 
 # Define UI elements
 st.title('Stock Sense : A DL Powered Stock Recommender 📈')
@@ -15,7 +15,7 @@ def render_page(nav_selection):
     elif nav_selection == 'LSTM 📶':
         LSTMArch.app()
     elif nav_selection == 'News Stand📰':
-        app.app()
+        app1.app()
     elif nav_selection == 'NLP 😊😔':
         nlp.app()
     elif nav_selection == 'Portfolio 🏢':
