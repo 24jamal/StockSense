@@ -388,5 +388,3 @@ else:
     st.subheader("Last 6 months News Sentiment shows a negative trend.🔽")
     sentimentbool = False
 
-
-this Reliance.py change accordingly
