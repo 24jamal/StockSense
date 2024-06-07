@@ -2,6 +2,7 @@ import streamlit as st
 import Reliance
 import app1
 
+
 # Define UI elements
 st.title('Stock Sense : A DL Powered Stock Recommender 📈')
 # Add checkboxes for selecting companies
