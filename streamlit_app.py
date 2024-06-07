@@ -2,33 +2,30 @@ import streamlit as st
 import Reliance
 import App1
 
-
 # Define UI elements
 st.title('Stock Sense : A DL Powered Stock Recommender 📈')
+
+# Buttons for each navigation option
+if st.button('Home 🏠'):
+    st.write('Welcome to the home page! 😄')
+elif st.button('LSTM 📶'):
+    LSTMArch.app()
+elif st.button('News Stand📰'):
+    app1.app()
+elif st.button('NLP 😊😔'):
+    nlp.app()
+elif st.button('Portfolio 🏢'):
+    Portfolio.app()
+elif st.button('Documentation 📁'):
+    Documentation.app()
+elif st.button('Feedback 📋'):
+    feedback.app()
+elif st.button('ChatBot 💬'):
+    ChatBot.app()
+
 # Add checkboxes for selecting companies
 selected_companies = st.sidebar.multiselect('Select Companies', ['Infosys', 'TCS', 'Reliance', 'Cipla'])
-# Navigation sidebar
-nav_selection = st.sidebar.radio('Navigation', ['Home 🏠', 'LSTM 📶', 'NLP 😊😔','News Stand📰','Portfolio 🏢','Documentation 📁','ChatBot 💬','Feedback 📋'])
-# Function to render different pages
-def render_page(nav_selection):
-    if nav_selection == 'Home 🏠':
-        st.write('Welcome to the home page! 😄')
-    elif nav_selection == 'LSTM 📶':
-        LSTMArch.app()
-    elif nav_selection == 'News Stand📰':
-        app1.app()
-    elif nav_selection == 'NLP 😊😔':
-        nlp.app()
-    elif nav_selection == 'Portfolio 🏢':
-        Portfolio.app()
-    elif nav_selection == 'Documentation 📁':
-        Documentation.app()
-    elif nav_selection == 'Feedback 📋':
-        feedback.app()
-    elif nav_selection == 'ChatBot 💬':
-        ChatBot.app()
-# Render selected page
-render_page(nav_selection)
+
 # Display predictions for selected companies
 if selected_companies:
     st.subheader('Predictions for Selected Companies')
@@ -42,6 +39,7 @@ if selected_companies:
             Reliance.app()
         elif company == 'Cipla':
             Cipla.app()
+
 # Add images in grid format
 col1, col2, col3, col4 = st.columns(4)
 # Row 1
@@ -83,6 +81,7 @@ col15.image("sun.jpg", use_column_width=True)
 button15 = col15.button("Sun Pharma")
 col16.image("MRF.jpg", use_column_width=True)
 button16 = col16.button("MRF")
+
 # Check if a button is clicked and launch the corresponding Streamlit app
 if button1:
     Reliance.app()
