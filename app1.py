@@ -1,101 +1,135 @@
 import streamlit as st
-from pymongo import MongoClient
-from datetime import datetime
-import subprocess
+import Reliance
+import app1
+import LSTMArch
+import nlp
+import Portfolio
+import Documentation
+import feedback
+import ChatBot
+import Infosys
+import TCS
+import Cipla
 
-# Function to execute selected Streamlit script
-def run_streamlit_script(script_name):
-    subprocess.Popen(["streamlit", "run", f"{script_name}.py"])
+# Define UI elements
+st.title('Stock Sense : A DL Powered Stock Recommender 📈')
 
-# MongoDB connection
-client = MongoClient("mongodb+srv://jamalceg123:p16QLbUdxhXHU0vb@stocksenseatlas.387yu8u.mongodb.net/")
-db = client["News_DataBase_Atlas"]
+# Add checkboxes for selecting companies
+selected_companies = st.sidebar.multiselect('Select Companies', ['Infosys', 'TCS', 'Reliance', 'Cipla'])
 
-# Function to retrieve articles for a given company within a date range and optionally filtered by search query
-def retrieve_articles_within_date_range(company, start_date, end_date, page_index, search_query=None):
-    # Convert start_date and end_date to ISO 8601 format strings
-    start_date_str = start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
-    end_date_str = end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+# Navigation sidebar
+nav_selection = st.sidebar.radio('Navigation', ['Home 🏠', 'LSTM 📶', 'NLP 😊😔', 'News Stand📰', 'Portfolio 🏢', 'Documentation 📁', 'ChatBot 💬', 'Feedback 📋'])
 
-    # Query MongoDB for articles within the specified date range
-    articles_collection = db[company.lower() + "_articles"]
-    query = {
-        "publishedAt": {"$gte": start_date_str, "$lte": end_date_str}
-    }
+# Function to render different pages
+def render_page(nav_selection):
+    if nav_selection == 'Home 🏠':
+        st.write('Welcome to the home page! 😄')
+    elif nav_selection == 'LSTM 📶':
+        LSTMArch.app()
+    elif nav_selection == 'News Stand📰':
+        try:
+            app1.app()
+        except AttributeError as e:
+            st.error(f"Error loading News Stand: {e}")
+    elif nav_selection == 'NLP 😊😔':
+        nlp.app()
+    elif nav_selection == 'Portfolio 🏢':
+        Portfolio.app()
+    elif nav_selection == 'Documentation 📁':
+        Documentation.app()
+    elif nav_selection == 'Feedback 📋':
+        feedback.app()
+    elif nav_selection == 'ChatBot 💬':
+        ChatBot.app()
 
-    # Filter articles by search query if provided
-    if search_query:
-        search_query = search_query.lower()  # Convert search query to lowercase
-        articles = articles_collection.find(query).sort("publishedAt", -1).skip(page_index * 5).limit(5)
-        filtered_articles = []
-        for article in articles:
-            title = article.get('title', '').lower()
-            description = article.get('description', '').lower()
-            author = article.get('author', '')  # Get the author value
-            if author:  # Check if author value is not None
-                author = author.lower()  # Convert author value to lowercase
-            if (search_query in title or
-                search_query in description or
-                (author and search_query in author)):  # Check if author is not None before using lower()
-                filtered_articles.append(article)
-        return filtered_articles
-    else:
-        # No search query provided, return all articles within the date range
-        articles = articles_collection.find(query).sort("publishedAt", -1).skip(page_index * 5).limit(5)
-        return list(articles)
+# Render selected page
+render_page(nav_selection)
 
-# Home button with icon in top-right corner
-if st.button("Home 🏠", key='home_button', help="Home"):
-    run_streamlit_script("DashB")
+# Display predictions for selected companies
+if selected_companies:
+    st.subheader('Predictions for Selected Companies')
+    for company in selected_companies:
+        st.write(f'Predictions for {company}')
+        if company == 'Infosys':
+            Infosys.app()
+        elif company == 'TCS':
+            TCS.app()
+        elif company == 'Reliance':
+            Reliance.app()
+        elif company == 'Cipla':
+            Cipla.app()
 
-# Streamlit app
-st.title('News Stand 📰')
-
-# Companies list
-companies = ['Infosys', 'TCS', 'Reliance', 'Kotak', 'Cipla',"HDFC",
-    "HINDUNILVR",
-    "BHARTIARTL",
-    "ITC",
-    "LT", "TTMT", "SBIN", "SUNPHARMA", "BRITANNIA", "AXISBANK", "GODREJCP", "ONGC"
-    ]
-
-# Option bar
-start_date, end_date = st.columns(2)
-page_index, company_selection, search_query = st.columns([1, 2, 3])
-
-start_date = start_date.date_input("Start Date")
-end_date = end_date.date_input("End Date")
-
-page_index = page_index.number_input("Page Index", min_value=0, value=0)
-
-company = company_selection.selectbox("Select Company", companies)
-
-search_query = search_query.text_input("Search by Title, Description, or Author")
-
-# Display data for the selected company within the specified date range
-articles = retrieve_articles_within_date_range(company, start_date, end_date, page_index, search_query)
-if articles:
-    table_data = []
-    for article in articles:
-        title = article.get("title", "N/A")
-        description = article.get("description", "N/A")
-        author = article.get("author", "N/A")
-        
-        # Highlight the specific word in the data if search query is provided
-        if search_query:
-            title = title.replace(search_query, f'<mark>{search_query}</mark>')
-            description = description.replace(search_query, f'<mark>{search_query}</mark>')
-            author = author.replace(search_query, f'<mark>{search_query}</mark>')
-        
-        table_row = {
-            "Title": title,
-            "Description": description,
-            "Author": author,
-            "Published At": article.get("publishedAt", "N/A"),
-            "Source": article.get("source", {}).get("name", "N/A"),
-            "URL": article.get("url", "N/A")
-        }
-        table_data.append(table_row)
-    st.table(table_data)
-else:
-    st.write("No articles found for", company)
+# Add images in grid format
+col1, col2, col3, col4 = st.columns(4)
+# Row 1
+col1.image("RIL.jpg", use_column_width=True)
+button1 = col1.button("Reliance")
+col2.image("Cipla.jpg", use_column_width=True)
+button2 = col2.button("Cipla")
+col3.image("BRIT.jpg", use_column_width=True)
+button3 = col3.button("Britannia")
+col4.image("TCS.jpg", use_column_width=True)
+button4 = col4.button("TCS")
+# Row 2
+col5, col6, col7, col8 = st.columns(4)
+col5.image("Axis.jpg", use_column_width=True)
+button5 = col5.button("Axis Bank")
+col6.image("KOTAK.jpg", use_column_width=True)
+button6 = col6.button("Kotak Mahindra")
+col7.image("LT.jpg", use_column_width=True)
+button7 = col7.button("Larsen & Toubro")
+col8.image("SBI.jpg", use_column_width=True)
+button8 = col8.button("State Bank of India")
+# Row 3
+col9, col10, col11, col12 = st.columns(4)
+col9.image("Infosys.jpg", use_column_width=True)
+button9 = col9.button("Infosys")
+col10.image("UNIV.jpg", use_column_width=True)
+button10 = col10.button("Hindustan Unilever")
+col11.image("godrej.jpg", use_column_width=True)
+button11 = col11.button("Godrej CP")
+col12.image("hdfc.jpg", use_column_width=True)
+button12 = col12.button("HDFC Bank")
+# Row 4
+col13, col14, col15, col16 = st.columns(4)
+col13.image("ONGC.jpg", use_column_width=True)
+button13 = col13.button("ONGC Ltd")
+col14.image("ttmt.jpg", use_column_width=True)
+button14 = col14.button("TATA Motors")
+col15.image("sun.jpg", use_column_width=True)
+button15 = col15.button("Sun Pharma")
+col16.image("MRF.jpg", use_column_width=True)
+button16 = col16.button("MRF")
+# Check if a button is clicked and launch the corresponding Streamlit app
+if button1:
+    Reliance.app()
+elif button2:
+    Cipla.app()
+elif button3:
+    Britannia.app()
+elif button4:
+    TCS.app()
+elif button5:
+    Axis.app()
+elif button6:
+    Kotak.app()
+elif button7:
+    LT.app()
+elif button8:
+    SBI.app()
+elif button9:
+    Infosys.app()
+elif button10:
+    Unilever.app()
+elif button11:
+    GODREJCP.app()
+elif button12:
+    HDFCBank.app()
+elif button13:
+    ONGC.app()
+elif button14:
+    TATAMotors.app()
+elif button15:
+    SunPharma.app()
+elif button16:
+    MRF.app()
