@@ -1,5 +1,5 @@
 import streamlit as st
-import LSTMArch, app, nlp, Portfolio, Documentation, feedback, ChatBot, Reliance, Cipla, Britannia, TCS, Axis, Kotak, LT, SBI, Infosys, Unilever, GODREJCP, HDFCBank, ONGC, TATAMotors, SunPharma, MRF
+import LSTMArch,Reliance
 
 # Define UI elements
 st.title('Stock Sense : A DL Powered Stock Recommender 📈')
