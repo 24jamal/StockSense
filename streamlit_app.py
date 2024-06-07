@@ -1,63 +1,52 @@
 import streamlit as st
-import Reliance
-import subprocess
+import LSTMArch, app, nlp, Portfolio, Documentation, feedback, ChatBot, Reliance, Cipla, Britannia, TCS, Axis, Kotak, LT, SBI, Infosys, Unilever, GODREJCP, HDFCBank, ONGC, TATAMotors, SunPharma, MRF
 
 # Define UI elements
-st.title('Stock Sense : A DL Powered Stock Recommender 	📈 ')
+st.title('Stock Sense : A DL Powered Stock Recommender 📈')
 
 # Add checkboxes for selecting companies
 selected_companies = st.sidebar.multiselect('Select Companies', ['Infosys', 'TCS', 'Reliance', 'Cipla'])
 
+# Navigation sidebar
 nav_selection = st.sidebar.radio('Navigation', ['Home 🏠', 'LSTM 📶', 'NLP 😊😔','News Stand📰','Portfolio 🏢','Documentation 📁','ChatBot 💬','Feedback 📋'])
-
-# Function to execute selected Streamlit script
-def run_streamlit_script(script_name):
-    subprocess.Popen(["streamlit", "run", f"{script_name}.py"])
 
 # Function to render different pages
 def render_page(nav_selection):
     if nav_selection == 'Home 🏠':
         st.write('Welcome to the home page! 😄')
     elif nav_selection == 'LSTM 📶':
-        st.write('You are now on the LSTM page.')
-        run_streamlit_script("LSTMArch")
+        LSTMArch.app()
     elif nav_selection == 'News Stand📰':
-        st.write('You are now on the News page.')
-        run_streamlit_script("app")
+        app.app()
     elif nav_selection == 'NLP 😊😔':
-        st.write('You are now on the NLP page.')
-        run_streamlit_script("nlp")
+        nlp.app()
     elif nav_selection == 'Portfolio 🏢':
-        st.write('You are now on the Portfolio page.')
-        run_streamlit_script("Portfolio")
+        Portfolio.app()
     elif nav_selection == 'Documentation 📁':
-        st.write('You are now on the Documentation page.')
-        run_streamlit_script("Documentation")
+        Documentation.app()
     elif nav_selection == 'Feedback 📋':
-        st.write('You are now on the Feedback page.')
-        run_streamlit_script("feedback")
+        feedback.app()
     elif nav_selection == 'ChatBot 💬':
-        st.write('You are now on the ChatBot page.')
-        run_streamlit_script("ChatBot")
-#
-
-
-    # Display predictions for selected companies
-    if selected_companies:
-        st.subheader('Predictions for Selected Companies')
-        for company in selected_companies:
-            st.write(f'Predictions for {company}')
-
-    # Run scripts for selected companies
-    for company in selected_companies:
-        st.write(f"Running {company} script...")
-        run_streamlit_script(company)
+        ChatBot.app()
 
 # Render selected page
 render_page(nav_selection)
 
-# Add images in grid format
+# Display predictions for selected companies
+if selected_companies:
+    st.subheader('Predictions for Selected Companies')
+    for company in selected_companies:
+        st.write(f'Predictions for {company}')
+        if company == 'Infosys':
+            Infosys.app()
+        elif company == 'TCS':
+            TCS.app()
+        elif company == 'Reliance':
+            Reliance.app()
+        elif company == 'Cipla':
+            Cipla.app()
 
+# Add images in grid format
 col1, col2, col3, col4 = st.columns(4)
 
 # Row 1
@@ -92,6 +81,7 @@ button11 = col11.button("Godrej CP")
 col12.image("hdfc.jpg", use_column_width=True)
 button12 = col12.button("HDFC Bank")
 
+# Row 4
 col13, col14, col15, col16 = st.columns(4)
 col13.image("ONGC.jpg", use_column_width=True)
 button13 = col13.button("ONGC Ltd")
@@ -102,40 +92,36 @@ button15 = col15.button("Sun Pharma")
 col16.image("MRF.jpg", use_column_width=True)
 button16 = col16.button("MRF")
 
-
-
 # Check if a button is clicked and launch the corresponding Streamlit app
 if button1:
-    run_streamlit_script("Reliance")
+    Reliance.app()
 elif button2:
-    run_streamlit_script("Cipla")
+    Cipla.app()
 elif button3:
-    run_streamlit_script("Britannia")
+    Britannia.app()
 elif button4:
-    run_streamlit_script("TCS")
+    TCS.app()
 elif button5:
-    run_streamlit_script("Axis")
+    Axis.app()
 elif button6:
-    run_streamlit_script("Kotak")
+    Kotak.app()
 elif button7:
-    run_streamlit_script("LT")
+    LT.app()
 elif button8:
-    run_streamlit_script("SBI")
+    SBI.app()
 elif button9:
-    run_streamlit_script("Infosys")
+    Infosys.app()
 elif button10:
-    run_streamlit_script("Unilever")
+    Unilever.app()
 elif button11:
-    run_streamlit_script("GODREJCP")
+    GODREJCP.app()
 elif button12:
-    run_streamlit_script("HDFCBank")
+    HDFCBank.app()
 elif button13:
-    run_streamlit_script("ONGC")
+    ONGC.app()
 elif button14:
-    run_streamlit_script("TATAMotors")
+    TATAMotors.app()
 elif button15:
-    run_streamlit_script("SunPharma")
+    SunPharma.app()
 elif button16:
-    run_streamlit_script("MRF")
-
-
+    MRF.app()
