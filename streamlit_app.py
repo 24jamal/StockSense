@@ -18,7 +18,7 @@ def render_page(nav_selection):
     elif nav_selection == 'LSTM 📶':
         LSTMArch.app()
     elif nav_selection == 'News Stand📰':
-        app1.run()
+        App1.app()
     elif nav_selection == 'NLP 😊😔':
         nlp.app()
     elif nav_selection == 'Portfolio 🏢':
