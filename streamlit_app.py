@@ -1,13 +1,25 @@
 import streamlit as st
 import Reliance
 import app1
+import LSTMArch
+import nlp
+import Portfolio
+import Documentation
+import feedback
+import ChatBot
+import Infosys
+import TCS
+import Cipla
 
 # Define UI elements
 st.title('Stock Sense : A DL Powered Stock Recommender 📈')
+
 # Add checkboxes for selecting companies
 selected_companies = st.sidebar.multiselect('Select Companies', ['Infosys', 'TCS', 'Reliance', 'Cipla'])
+
 # Navigation sidebar
-nav_selection = st.sidebar.radio('Navigation', ['Home 🏠', 'LSTM 📶', 'NLP 😊😔','News Stand📰','Portfolio 🏢','Documentation 📁','ChatBot 💬','Feedback 📋'])
+nav_selection = st.sidebar.radio('Navigation', ['Home 🏠', 'LSTM 📶', 'NLP 😊😔', 'News Stand📰', 'Portfolio 🏢', 'Documentation 📁', 'ChatBot 💬', 'Feedback 📋'])
+
 # Function to render different pages
 def render_page(nav_selection):
     if nav_selection == 'Home 🏠':
@@ -15,7 +27,10 @@ def render_page(nav_selection):
     elif nav_selection == 'LSTM 📶':
         LSTMArch.app()
     elif nav_selection == 'News Stand📰':
-        app1.app()
+        try:
+            app1.app()
+        except Exception as e:
+            st.error(f"Error loading News Stand: {e}")
     elif nav_selection == 'NLP 😊😔':
         nlp.app()
     elif nav_selection == 'Portfolio 🏢':
@@ -26,8 +41,10 @@ def render_page(nav_selection):
         feedback.app()
     elif nav_selection == 'ChatBot 💬':
         ChatBot.app()
+
 # Render selected page
 render_page(nav_selection)
+
 # Display predictions for selected companies
 if selected_companies:
     st.subheader('Predictions for Selected Companies')
@@ -41,6 +58,7 @@ if selected_companies:
             Reliance.app()
         elif company == 'Cipla':
             Cipla.app()
+
 # Add images in grid format
 col1, col2, col3, col4 = st.columns(4)
 # Row 1
