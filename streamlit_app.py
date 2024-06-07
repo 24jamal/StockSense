@@ -1,5 +1,6 @@
 import streamlit as st
-import Reliance,app
+import Reliance
+import app
 
 # Define UI elements
 st.title('Stock Sense : A DL Powered Stock Recommender 📈')
