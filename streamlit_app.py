@@ -93,6 +93,7 @@ button15 = col15.button("Sun Pharma")
 col16.image("MRF.jpg", use_column_width=True)
 button16 = col16.button("MRF")
 
+
 # Check if a button is clicked and launch the corresponding Streamlit app
 if button1:
     Reliance.app()
