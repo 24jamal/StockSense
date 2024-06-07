@@ -1,15 +1,8 @@
 import streamlit as st
 import Reliance
 import app1
-import LSTMArch
-import nlp
-import Portfolio
-import Documentation
-import feedback
-import ChatBot
-import Infosys
-import TCS
-import Cipla
+
+
 
 # Define UI elements
 st.title('Stock Sense : A DL Powered Stock Recommender 📈')
