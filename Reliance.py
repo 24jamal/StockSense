@@ -11,6 +11,12 @@ import matplotlib.pyplot as plt
 import subprocess
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
+st.set_page_config(
+    page_title="Reliance",
+    page_icon="🏛️",
+)
+
+
 # Function to execute selected Streamlit script
 def run_streamlit_script(script_name):
     subprocess.Popen(["streamlit", "run", f"{script_name}.py"])
